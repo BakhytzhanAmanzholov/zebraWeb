@@ -14,4 +14,8 @@ public class OrderDto {
     private StaffDto staff;
     private ClientDto client;
     private List<ProductDto> products;
+
+    private Integer price;
+    private Integer finalPrice;
+
 }

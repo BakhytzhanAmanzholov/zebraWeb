@@ -25,6 +25,11 @@ public class Booking {
     private Date date;
     @ManyToOne
     private CoffeeHouse coffeeHouse;
+
+    private Integer price;
+    private Integer finalPrice;
+
+
     @ManyToMany
     @ToString.Exclude
     private List<Product> products = new ArrayList<>();

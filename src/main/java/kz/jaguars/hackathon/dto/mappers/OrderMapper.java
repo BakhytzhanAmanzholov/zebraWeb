@@ -13,6 +13,8 @@ public class OrderMapper {
                 .date(order.getDate())
                 .staff(StaffMapper.toResponseDto(order.getStaff()))
                 .products(new ArrayList<>())
+                .price(order.getPrice())
+                .finalPrice(order.getFinalPrice())
                 .build();
 
         if(order.getAccount() != null){

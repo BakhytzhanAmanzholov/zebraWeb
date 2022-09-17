@@ -38,4 +38,37 @@ public class OrderController {
         Booking booking = orderService.saveWithCoffee(id);
         return new ResponseEntity<>("Save order by id " + booking.getId(), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(OrderMapper.toResponseDto(orderService.findById(id)),HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/products/{product-id}/{count}")
+    public ResponseEntity<?> addProduct(@PathVariable("id") Long id, @PathVariable("product-id") Long productId,
+                                        @PathVariable("count") Integer count){
+        orderService.addProductsToOrder(id, productId, count);
+        return new ResponseEntity<>("Product " + productId + " successfully added to the order by id " + id, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/products/{product-id}/{count}")
+    public ResponseEntity<?> removeProduct(@PathVariable("id") Long id, @PathVariable("product-id") Long productId,
+                                           @PathVariable("count") Integer count){
+        orderService.removeProductsFromOrder(id, productId, count);
+        return new ResponseEntity<>("Product " + productId + " successfully removed from the order by id " + id, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/client/{client-id}")
+    public ResponseEntity<?> addClient(@PathVariable("id") Long id, @PathVariable("client-id") Long clientId){
+
+        orderService.addClientToOrder(id, clientId);
+
+        return new ResponseEntity<>("Client " + clientId + " successfully added to order " + id, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+        orderService.delete(id);
+        return new ResponseEntity<>("Order by id " + id + " successfully deleted",HttpStatus.OK);
+    }
 }
