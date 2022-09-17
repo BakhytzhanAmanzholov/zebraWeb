@@ -6,6 +6,7 @@ import kz.jaguars.hackathon.models.Booking;
 import kz.jaguars.hackathon.repositories.OrderRepository;
 import kz.jaguars.hackathon.services.CoffeeService;
 import kz.jaguars.hackathon.services.OrderService;
+import kz.jaguars.hackathon.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class OrderServiceImpl implements OrderService {
     private final CoffeeService coffeeService;
 
     private final OrderRepository orderRepository;
+
+    private final StaffService staffService;
 
     @Override
     public Booking save(Booking entity) {
@@ -60,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
         Booking booking = new Booking();
         booking.setDate(Date.valueOf(LocalDate.now()));
         booking.setCoffeeHouse(coffeeHouse);
+        booking.setStaff(staffService.findByEmail(staffService.isLogged()));
         return save(booking);
     }
 }

@@ -6,6 +6,8 @@ import kz.jaguars.hackathon.services.CoffeeService;
 import kz.jaguars.hackathon.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,17 @@ public class StaffServiceImpl implements StaffService {
         account.setCoffeeHouse(coffeeService.findById(coffeeHouse));
 
         return save(account);
+    }
+
+    @Override
+    public String isLogged() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        log.info(currentPrincipalName);
+        if (!currentPrincipalName.equals("anonymousUser")) {
+            return currentPrincipalName;
+        }
+        return "anonymousUser";
     }
 
     @Override

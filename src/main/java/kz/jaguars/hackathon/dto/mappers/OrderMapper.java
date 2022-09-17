@@ -12,9 +12,12 @@ public class OrderMapper {
                 .id(order.getId())
                 .date(order.getDate())
                 .staff(StaffMapper.toResponseDto(order.getStaff()))
-                .client(AccountMapper.toResponseDto(order.getAccount()))
                 .products(new ArrayList<>())
                 .build();
+
+        if(order.getAccount() != null){
+            dto.setClient(AccountMapper.toResponseDto(order.getAccount()));
+        }
 
         for (Product product: order.getProducts()){
             dto.getProducts().add(ProductMapper.toResponseDto(product));
