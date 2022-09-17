@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @Builder
-public class Order {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,6 +23,8 @@ public class Order {
     @ManyToOne
     private Account account;
     private Date date;
+    @ManyToOne
+    private CoffeeHouse coffeeHouse;
     @ManyToMany
     @ToString.Exclude
     private List<Product> products = new ArrayList<>();

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/supervisor")
+@RequestMapping("/api/supervisor")
 public class SupervisorController {
     private final StaffService staffService;
 

@@ -38,7 +38,7 @@ public class JwtSecurityConfig {
         httpSecurity.authorizeRequests().antMatchers("auth/token/**", "/", "/zebra-open-api").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/users/**").authenticated();
         httpSecurity.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN");
-        httpSecurity.authorizeRequests().antMatchers("/supervisor/**", "products/**").hasAuthority("SUPERVISOR");
+//        httpSecurity.authorizeRequests().antMatchers("/supervisor/**", "products/**").hasAuthority("SUPERVISOR");
 
 
         httpSecurity.addFilter(jwtAuthenticationFilter);

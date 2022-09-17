@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/cafe")
+@RequestMapping("/api/cafe")
 public class CoffeeController {
     private final CoffeeService coffeeService;
 
