@@ -1,7 +1,7 @@
 package kz.jaguars.hackathon.security.details;
 
 
-import kz.jaguars.hackathon.models.Account;
+import kz.jaguars.hackathon.models.Staff;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +15,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Slf4j
 public class UserDetailsImpl implements UserDetails {
-    private final Account user;
+    private final Staff user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -55,7 +55,7 @@ public class UserDetailsImpl implements UserDetails {
         return user.getConfirmed();
     }
 
-    public Account getUser() {
+    public Staff getUser() {
         return user;
     }
 

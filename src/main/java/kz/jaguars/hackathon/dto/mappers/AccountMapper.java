@@ -1,15 +1,14 @@
 package kz.jaguars.hackathon.dto.mappers;
 
 import kz.jaguars.hackathon.dto.request.RegistrationDto;
-import kz.jaguars.hackathon.models.Account;
-
-import java.util.ArrayList;
+import kz.jaguars.hackathon.models.Staff;
 
 public class AccountMapper {
-    public static Account fromRequestDto(RegistrationDto registrationDto){
-        return Account.builder()
+    public static Staff fromRequestDto(RegistrationDto registrationDto){
+        return Staff.builder()
                 .email(registrationDto.getEmail())
-                .username(registrationDto.getUsername())
+                .name(registrationDto.getName())
+                .surname(registrationDto.getSurname())
                 .password(registrationDto.getPassword())
                 .banned(true)
                 .confirmed(false)

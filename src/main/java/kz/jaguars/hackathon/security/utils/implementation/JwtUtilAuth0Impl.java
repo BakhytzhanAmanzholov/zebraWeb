@@ -4,7 +4,7 @@ package kz.jaguars.hackathon.security.utils.implementation;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import kz.jaguars.hackathon.models.Account;
+import kz.jaguars.hackathon.models.Staff;
 import kz.jaguars.hackathon.security.config.JwtSecurityConfig;
 import kz.jaguars.hackathon.security.details.UserDetailsImpl;
 import kz.jaguars.hackathon.security.utils.JwtUtil;
@@ -66,8 +66,8 @@ public class JwtUtilAuth0Impl implements JwtUtil {
         ParsedToken parsedToken = parse(token);
 
         return new UsernamePasswordAuthenticationToken(new UserDetailsImpl(
-                Account.builder()
-                        .role(Account.Role.valueOf(parsedToken.getRole()))
+                Staff.builder()
+                        .role(Staff.Role.valueOf(parsedToken.getRole()))
                         .email(parsedToken.getEmail())
                         .build()
         ), null,

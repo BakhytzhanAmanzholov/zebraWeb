@@ -35,9 +35,10 @@ public class JwtSecurityConfig {
                                                    JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        httpSecurity.authorizeRequests().antMatchers("/registration/**", "auth/token/**", "/", "/twitter-open-api").permitAll();
-        httpSecurity.authorizeRequests().antMatchers("/users/**", "/tweets/**", "/tags/**").authenticated();
-        httpSecurity.authorizeRequests().antMatchers("/admin/**", "/roles/**").hasAuthority("ADMIN");
+        httpSecurity.authorizeRequests().antMatchers("auth/token/**", "/", "/zebra-open-api").permitAll();
+        httpSecurity.authorizeRequests().antMatchers("/users/**").authenticated();
+        httpSecurity.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
+        httpSecurity.authorizeRequests().antMatchers("/supervisor").hasRole("SUPERVISOR");
 
 
         httpSecurity.addFilter(jwtAuthenticationFilter);

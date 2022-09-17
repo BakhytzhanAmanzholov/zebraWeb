@@ -1,6 +1,6 @@
 package kz.jaguars.hackathon.security.details;
 
-import kz.jaguars.hackathon.models.Account;
+import kz.jaguars.hackathon.models.Staff;
 import kz.jaguars.hackathon.repositories.AccountRepository;
 import kz.jaguars.hackathon.security.config.JwtSecurityConfig;
 import lombok.AccessLevel;
@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account user = usersRepository.findByEmail(email).orElseThrow(
+        Staff user = usersRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("User <" + email + "> not found"));
 
         return new UserDetailsImpl(user);

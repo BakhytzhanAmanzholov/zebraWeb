@@ -7,28 +7,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class Account {
+public class Staff {
 
     public enum State {
         NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
     }
 
     public enum Role {
-        USER, ADMIN
+        USER, SUPERVISOR, CASHIER, ADMIN
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String email;
-    private String username;
+    private String name;
+    private String surname;
     private String password;
 
     private Boolean confirmed = false;
