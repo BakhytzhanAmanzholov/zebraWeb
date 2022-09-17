@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -35,6 +37,11 @@ public class CoffeeServiceImpl implements CoffeeService {
         house.setShortName(entity.getShortName());
         house.setWorkingHours(entity.getWorkingHours());
         return house;
+    }
+
+    @Override
+    public List<CoffeeHouse> findAll() {
+        return (List<CoffeeHouse>) coffeeRepository.findAll();
     }
 
     @Override
