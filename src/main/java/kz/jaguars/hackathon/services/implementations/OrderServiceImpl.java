@@ -74,6 +74,7 @@ public class OrderServiceImpl implements OrderService {
         booking.setProducts(new ArrayList<>());
         booking.setPrice(0);
         booking.setFinalPrice(0);
+        booking.setCompleted(false);
         return save(booking);
     }
 
@@ -134,5 +135,21 @@ public class OrderServiceImpl implements OrderService {
         Account account = accountService.findById(clientId);
         order.setAccount(account);
         order.setFinalPrice(order.getPrice() - order.getPrice() / 100 * order.getAccount().getDiscount());
+    }
+
+    @Override
+    public void complete(Long id) {
+        Booking booking = findById(id);
+        if(pay(booking)){
+            booking.setCompleted(true);
+            if(booking.getAccount()!=null){
+                accountService.addOrderToAccount(booking, booking.getAccount().getId());
+            }
+        }
+    }
+
+    @Override
+    public boolean pay(Booking booking) {
+        return true; // Логика оплата
     }
 }

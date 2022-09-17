@@ -71,4 +71,10 @@ public class OrderController {
         orderService.delete(id);
         return new ResponseEntity<>("Order by id " + id + " successfully deleted",HttpStatus.OK);
     }
+
+    @PostMapping("/{id}/client")
+    public ResponseEntity<?> complete(@PathVariable("id") Long id){
+        orderService.complete(id);
+        return new ResponseEntity<>("The order was successfully completed",HttpStatus.OK);
+    }
 }

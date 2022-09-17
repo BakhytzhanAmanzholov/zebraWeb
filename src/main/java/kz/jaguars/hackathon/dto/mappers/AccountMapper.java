@@ -3,9 +3,11 @@ package kz.jaguars.hackathon.dto.mappers;
 import kz.jaguars.hackathon.dto.request.RegistrationDto;
 import kz.jaguars.hackathon.dto.response.ClientDto;
 import kz.jaguars.hackathon.models.Account;
+import kz.jaguars.hackathon.models.Booking;
 import kz.jaguars.hackathon.models.Product;
 import kz.jaguars.hackathon.models.Staff;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class AccountMapper {
@@ -27,9 +29,13 @@ public class AccountMapper {
                 .phoneNumber(account.getPhoneNumber())
                 .username(account.getUsername())
                 .preferences(new HashSet<>())
+                .orders(new ArrayList<>())
                 .build();
         for (Product product: account.getPreferences()){
             dto.getPreferences().add(ProductMapper.toResponseDto(product));
+        }
+        for(Booking order: account.getOrders()){
+            dto.getOrders().add(OrderMapper.toHistoryResponseDto(order));
         }
         return dto;
     }

@@ -29,6 +29,9 @@ public class Booking {
     private Integer price;
     private Integer finalPrice;
 
+    private Boolean completed;
+
+
 
     @ManyToMany
     @ToString.Exclude

@@ -2,6 +2,7 @@ package kz.jaguars.hackathon.services.implementations;
 
 import kz.jaguars.hackathon.exceptions.NotFoundException;
 import kz.jaguars.hackathon.models.Account;
+import kz.jaguars.hackathon.models.Booking;
 import kz.jaguars.hackathon.repositories.AccountRepository;
 import kz.jaguars.hackathon.services.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,11 @@ public class AccountServiceImpl implements AccountService {
     public Account findById(Long id) {
         return accountRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Client <" + id + "> not found"));
+    }
+
+    @Override
+    public void addOrderToAccount(Booking booking, Long id) {
+        Account account = findById(id);
+        account.getOrders().add(booking);
     }
 }

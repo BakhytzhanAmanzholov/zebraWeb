@@ -5,9 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -49,6 +47,10 @@ public class Account {
     private Role role;
     @Enumerated(value = EnumType.STRING)
     private State state;
+
+    @ManyToMany
+    @ToString.Exclude
+    private List<Booking> orders = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

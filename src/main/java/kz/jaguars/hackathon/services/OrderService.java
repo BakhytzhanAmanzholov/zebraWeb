@@ -18,4 +18,8 @@ public interface OrderService extends CrudService<Booking, Long> {
 
     void addClientToOrder(Long id, Long clientId);
 
+
+    void complete(Long id);
+
+    boolean pay(Booking booking);
 }
