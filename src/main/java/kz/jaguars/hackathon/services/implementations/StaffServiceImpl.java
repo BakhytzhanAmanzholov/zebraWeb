@@ -2,6 +2,7 @@ package kz.jaguars.hackathon.services.implementations;
 
 import kz.jaguars.hackathon.models.Staff;
 import kz.jaguars.hackathon.repositories.StaffRepository;
+import kz.jaguars.hackathon.services.CoffeeService;
 import kz.jaguars.hackathon.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ public class StaffServiceImpl implements StaffService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final CoffeeService coffeeService;
+
     @Override
     public Staff saveWithRole(Staff account, Long coffeeHouse, String roleName) {
         if(Staff.Role.ADMIN.toString().equals(roleName)){
@@ -38,7 +41,7 @@ public class StaffServiceImpl implements StaffService {
             account.setRole(Staff.Role.USER);
         }
 
-// coffee house
+        account.setCoffeeHouse(coffeeService.findById(coffeeHouse));
 
         return save(account);
     }
@@ -51,6 +54,7 @@ public class StaffServiceImpl implements StaffService {
         user.setState(CONFIRMED);
 //        emailSenderService.sendEmail(user.getEmail(), user.getUsername()); // Отправка письма
         user = staffRepository.save(user);
+        coffeeService.addStaffToCoffeeHouse(user, user.getCoffeeHouse().getId());
         return user;
     }
 

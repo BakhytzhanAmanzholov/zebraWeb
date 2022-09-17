@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Long aLong) {
         return productRepository.findById(aLong).orElseThrow(
-                () -> new NotFoundException("Preference <" + aLong + "> not found"));
+                () -> new NotFoundException("Product <" + aLong + "> not found"));
     }
 
     @Override
@@ -66,6 +66,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findByTitle(String title) {
         return productRepository.findByTitle(title).orElseThrow(
-                () -> new NotFoundException("Preference <" + title + "> not found"));
+                () -> new NotFoundException("Product <" + title + "> not found"));
     }
 }

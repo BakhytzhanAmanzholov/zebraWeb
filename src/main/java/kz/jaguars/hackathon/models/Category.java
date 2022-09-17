@@ -21,5 +21,6 @@ public class Category {
     private String title;
     private String description;
     @ManyToMany
+    @ToString.Exclude
     private Set<Product> products = new HashSet<>();
 }

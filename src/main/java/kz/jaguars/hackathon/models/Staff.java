@@ -41,6 +41,9 @@ public class Staff {
     @Enumerated(value = EnumType.STRING)
     private State state;
 
+    @ManyToOne
+    private CoffeeHouse coffeeHouse;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
