@@ -1,7 +1,7 @@
 package kz.jaguars.hackathon.security.details;
 
 import kz.jaguars.hackathon.models.Staff;
-import kz.jaguars.hackathon.repositories.AccountRepository;
+import kz.jaguars.hackathon.repositories.StaffRepository;
 import kz.jaguars.hackathon.security.config.JwtSecurityConfig;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @ConditionalOnBean(value = JwtSecurityConfig.class)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    AccountRepository usersRepository;
+    StaffRepository usersRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

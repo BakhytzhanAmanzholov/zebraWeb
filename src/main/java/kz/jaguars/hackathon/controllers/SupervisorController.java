@@ -3,7 +3,7 @@ package kz.jaguars.hackathon.controllers;
 import kz.jaguars.hackathon.dto.mappers.AccountMapper;
 import kz.jaguars.hackathon.dto.request.RegistrationDto;
 import kz.jaguars.hackathon.models.Staff;
-import kz.jaguars.hackathon.services.AccountService;
+import kz.jaguars.hackathon.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,15 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/supervisor")
 public class SupervisorController {
-    private final AccountService accountService;
+    private final StaffService staffService;
 
     @PostMapping("/registration")
     public ResponseEntity<?> registration(@RequestBody RegistrationDto dto) {
         try {
-            accountService.findByEmail(dto.getEmail());
+            staffService.findByEmail(dto.getEmail());
         } catch (UsernameNotFoundException e) {
             Staff account = AccountMapper.fromRequestDto(dto);
-            account = accountService.saveWithRole(account, dto.getCoffeeHouse(), dto.getRole());
+            account = staffService.saveWithRole(account, dto.getCoffeeHouse(), dto.getRole());
             return new ResponseEntity<>("The account " + account.getEmail() + " successfully registered by role "
                     + account.getRole(), HttpStatus.OK);
         }

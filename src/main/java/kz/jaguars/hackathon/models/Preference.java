@@ -5,7 +5,9 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -14,39 +16,24 @@ import java.util.Objects;
 @Setter
 @ToString
 @Builder
-public class Staff {
-
-    public enum State {
-        NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
-    }
-
-    public enum Role {
-        USER, SUPERVISOR, CASHIER, ADMIN
-    }
-
+public class Preference {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String email;
-    private String name;
-    private String surname;
-    private String password;
 
-    private Boolean confirmed = false;
+    private String title;
+    private String description;
 
-    private Boolean banned = false;
-
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
-    @Enumerated(value = EnumType.STRING)
-    private State state;
+    @ManyToMany
+    @ToString.Exclude
+    private Set<Product> products = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Staff staff = (Staff) o;
-        return id != null && Objects.equals(id, staff.id);
+        Preference that = (Preference) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

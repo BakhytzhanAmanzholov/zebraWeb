@@ -14,39 +14,27 @@ import java.util.Objects;
 @Setter
 @ToString
 @Builder
-public class Staff {
-
-    public enum State {
-        NOT_CONFIRMED, CONFIRMED, DELETED, BANNED
-    }
-
-    public enum Role {
-        USER, SUPERVISOR, CASHIER, ADMIN
-    }
-
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String email;
-    private String name;
-    private String surname;
-    private String password;
 
-    private Boolean confirmed = false;
+    private String title;
+    private String description;
 
-    private Boolean banned = false;
+    private Integer costPrice;
 
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
-    @Enumerated(value = EnumType.STRING)
-    private State state;
+    private Integer salePrice;
+
+    @ManyToOne
+    private Category category;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Staff staff = (Staff) o;
-        return id != null && Objects.equals(id, staff.id);
+        Product product = (Product) o;
+        return id != null && Objects.equals(id, product.id);
     }
 
     @Override

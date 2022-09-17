@@ -6,6 +6,7 @@ import kz.jaguars.hackathon.security.config.JwtSecurityConfig;
 import kz.jaguars.hackathon.security.details.UserDetailsImpl;
 import kz.jaguars.hackathon.security.utils.AuthorizationHeaderUtil;
 import kz.jaguars.hackathon.security.utils.JwtUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -74,17 +75,37 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private void writeTokens(HttpServletRequest request, HttpServletResponse response, UserDetailsImpl userDetails) throws IOException {
         response.setContentType("application/json");
 
+        TokenWithRoleName r = new TokenWithRoleName();
+        r.setData(new AuthData());
+        r.getData().setEmail(userDetails.getUser().getEmail());
+        r.getData().setName(userDetails.getUser().getName());
+        r.getData().setSurname(userDetails.getUser().getSurname());
+        r.getData().setRole(userDetails.getUser().getRole().toString());
+
         Map<String, String> tokenJson = jwtUtil.generateTokens(
                 userDetails.getUsername(),
                 userDetails.getAuthorities().iterator().next().getAuthority(),
                 request.getRequestURL().toString());
-
-        objectMapper.writeValue(response.getOutputStream(), tokenJson);
+        r.setToken(tokenJson);
+        objectMapper.writeValue(response.getOutputStream(), r);
     }
 
     private boolean hasRefreshToken(HttpServletRequest request) {
         return authorizationHeaderUtil.hasAuthorizationToken(request);
     }
 
+}
 
+@Data
+class TokenWithRoleName{
+    private Map<String, String> token;
+    private AuthData data;
+}
+
+@Data
+class AuthData{
+    private String email;
+    private String name;
+    private String surname;
+    private String role;
 }

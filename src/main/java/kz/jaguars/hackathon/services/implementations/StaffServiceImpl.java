@@ -1,8 +1,8 @@
 package kz.jaguars.hackathon.services.implementations;
 
 import kz.jaguars.hackathon.models.Staff;
-import kz.jaguars.hackathon.repositories.AccountRepository;
-import kz.jaguars.hackathon.services.AccountService;
+import kz.jaguars.hackathon.repositories.StaffRepository;
+import kz.jaguars.hackathon.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +17,9 @@ import static kz.jaguars.hackathon.models.Staff.State.CONFIRMED;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class AccountServiceImpl implements AccountService {
+public class StaffServiceImpl implements StaffService {
 
-    private final AccountRepository accountRepository;
+    private final StaffRepository staffRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -50,14 +50,14 @@ public class AccountServiceImpl implements AccountService {
         user.setConfirmed(true);
         user.setState(CONFIRMED);
 //        emailSenderService.sendEmail(user.getEmail(), user.getUsername()); // Отправка письма
-        user = accountRepository.save(user);
+        user = staffRepository.save(user);
         return user;
     }
 
     @Override
     public void delete(Long id) {
         Staff account = findById(id);
-        accountRepository.delete(account);
+        staffRepository.delete(account);
     }
 
     @Override
@@ -70,14 +70,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Staff findById(Long id) {
-        return accountRepository.findById(id).orElseThrow(
+        return staffRepository.findById(id).orElseThrow(
                 () -> new UsernameNotFoundException("User <" + id + "> not found"));
 
     }
 
     @Override
     public Staff findByEmail(String email) {
-        return accountRepository.findByEmail(email).orElseThrow(
+        return staffRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("User <" + email + "> not found"));
     }
 }
