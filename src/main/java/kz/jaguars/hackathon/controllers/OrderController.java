@@ -36,7 +36,7 @@ public class OrderController {
     @PostMapping("/{id}")
     public ResponseEntity<?> save(@PathVariable("id") Long id){
         Booking booking = orderService.saveWithCoffee(id);
-        return new ResponseEntity<>("Save order by id " + booking.getId(), HttpStatus.OK);
+        return new ResponseEntity<>(OrderMapper.toResponseDto(booking), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
