@@ -77,6 +77,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         TokenWithRoleName r = new TokenWithRoleName();
         r.setData(new AuthData());
+        r.setCafe(new CoffeeData());
         r.getData().setEmail(userDetails.getUser().getEmail());
         r.getData().setName(userDetails.getUser().getName());
         r.getData().setSurname(userDetails.getUser().getSurname());
@@ -87,6 +88,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 userDetails.getAuthorities().iterator().next().getAuthority(),
                 request.getRequestURL().toString());
         r.setToken(tokenJson);
+
+        r.getCafe().setId(userDetails.getUser().getCoffeeHouse().getId());
+        r.getCafe().setAddress(userDetails.getUser().getCoffeeHouse().getAddress());
+
         objectMapper.writeValue(response.getOutputStream(), r);
     }
 
@@ -100,6 +105,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 class TokenWithRoleName{
     private Map<String, String> token;
     private AuthData data;
+    private CoffeeData cafe;
 }
 
 @Data
@@ -108,4 +114,9 @@ class AuthData{
     private String name;
     private String surname;
     private String role;
+}
+@Data
+class CoffeeData{
+    private Long id;
+    private String address;
 }

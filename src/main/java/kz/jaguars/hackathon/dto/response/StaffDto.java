@@ -11,4 +11,5 @@ public class StaffDto {
     private String name;
     private String surname;
     private String role;
+
 }
