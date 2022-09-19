@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -20,6 +21,17 @@ public class CoffeeHouse {
     private String shortName; // находится возле Евразии? shortName - Евразия.
     private String address;
     private String workingHours;
+
+    private Integer countSales;
+    private Double averageBill;
+    private Integer profit;
+    private Integer expenses;
+
+    private Integer marginality;
+    private Double salesVolume;
+
+    @ManyToMany
+    private Set<BestProduct> bestProducts;
 
     @ManyToMany
     @ToString.Exclude

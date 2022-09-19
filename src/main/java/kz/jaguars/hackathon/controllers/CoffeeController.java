@@ -2,6 +2,7 @@ package kz.jaguars.hackathon.controllers;
 
 import kz.jaguars.hackathon.dto.mappers.CoffeeHouseMapper;
 import kz.jaguars.hackathon.dto.response.CoffeeHouseDto;
+import kz.jaguars.hackathon.dto.response.CoffeeWithSalesDto;
 import kz.jaguars.hackathon.models.CoffeeHouse;
 import kz.jaguars.hackathon.services.CoffeeService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,16 @@ public class CoffeeController {
         List<CoffeeHouseDto> dtoList = new ArrayList<>();
         for(CoffeeHouse coffeeHouse: coffeeHouses){
             dtoList.add(CoffeeHouseMapper.toResponseDto(coffeeHouse));
+        }
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/sales")
+    public ResponseEntity<?> findAllWithSales(){
+        List<CoffeeHouse> coffeeHouses = coffeeService.findAll();
+        List<CoffeeWithSalesDto> dtoList = new ArrayList<>();
+        for(CoffeeHouse coffeeHouse: coffeeHouses){
+            dtoList.add(CoffeeHouseMapper.toResponseSalesDto(coffeeHouse));
         }
         return new ResponseEntity<>(dtoList, HttpStatus.OK);
     }

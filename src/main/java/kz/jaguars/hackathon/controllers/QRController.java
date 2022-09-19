@@ -2,7 +2,6 @@ package kz.jaguars.hackathon.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +17,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.Hashtable;
 
 
@@ -28,11 +26,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
-import javax.print.attribute.standard.Media;
 
 @Controller
 @Slf4j
@@ -57,7 +52,7 @@ public class QRController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        InputStream in = getClass().getResourceAsStream("/kz/jaguars/hackathon/JD.png");
+        InputStream in = getClass().getResourceAsStream("JD.png");
         assert in != null;
         return ResponseEntity.ok()
                 .contentType(contentType)

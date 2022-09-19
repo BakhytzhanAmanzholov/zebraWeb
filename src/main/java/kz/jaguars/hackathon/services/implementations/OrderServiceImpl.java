@@ -1,23 +1,17 @@
 package kz.jaguars.hackathon.services.implementations;
 
 import kz.jaguars.hackathon.exceptions.NotFoundException;
-import kz.jaguars.hackathon.models.Account;
-import kz.jaguars.hackathon.models.CoffeeHouse;
-import kz.jaguars.hackathon.models.Booking;
-import kz.jaguars.hackathon.models.Product;
+import kz.jaguars.hackathon.models.*;
 import kz.jaguars.hackathon.repositories.OrderRepository;
 import kz.jaguars.hackathon.services.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Book;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -140,11 +134,28 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void complete(Long id) {
         Booking booking = findById(id);
-        if(pay(booking)){
+        Integer expenses = 0;
+        if (pay(booking)) {
             booking.setCompleted(true);
-            if(booking.getAccount()!=null){
+            if (booking.getAccount() != null) {
                 accountService.addOrderToAccount(booking, booking.getAccount().getId());
             }
+
+            Map<Product, Integer> products = new HashMap<>();
+            for (int i = 0; i < booking.getProducts().size(); i++) {
+                products.put(booking.getProducts().get(i), 1);
+                for (int j = i; j < booking.getProducts().size(); j++) {
+                    if(booking.getProducts().get(i).equals(booking.getProducts().get(j))){
+                        products.replace(booking.getProducts().get(i),
+                                products.get(booking.getProducts().get(i)) + 1);
+                    }
+                }
+            }
+
+
+            coffeeService.countSales(booking.getCoffeeHouse().getId(), booking.getFinalPrice(), expenses, booking.getProducts().size());
+            coffeeService.countBestProduct(booking.getCoffeeHouse().getId(), products);
+
         }
     }
 
