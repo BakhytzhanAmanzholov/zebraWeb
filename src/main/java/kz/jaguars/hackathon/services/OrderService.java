@@ -1,5 +1,6 @@
 package kz.jaguars.hackathon.services;
 
+import kz.jaguars.hackathon.models.Account;
 import kz.jaguars.hackathon.models.Booking;
 import kz.jaguars.hackathon.models.Product;
 
@@ -16,7 +17,7 @@ public interface OrderService extends CrudService<Booking, Long> {
 
     void removeProductsFromOrder(Long orderId, Long productId, Integer count);
 
-    void addClientToOrder(Long id, Long clientId);
+    Account addClientToOrder(Long id, Long clientId);
 
 
     void complete(Long id);

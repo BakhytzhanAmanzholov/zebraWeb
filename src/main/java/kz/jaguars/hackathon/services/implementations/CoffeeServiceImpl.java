@@ -7,6 +7,7 @@ import kz.jaguars.hackathon.models.Product;
 import kz.jaguars.hackathon.models.Staff;
 import kz.jaguars.hackathon.repositories.CoffeeRepository;
 import kz.jaguars.hackathon.services.CoffeeService;
+import kz.jaguars.hackathon.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class CoffeeServiceImpl implements CoffeeService {
 
     private final CoffeeRepository coffeeRepository;
 
+    private final ProductService productService;
+
     @Override
     public CoffeeHouse save(CoffeeHouse entity) {
         entity.setCountSales(0);
@@ -35,7 +38,17 @@ public class CoffeeServiceImpl implements CoffeeService {
         entity.setSalesVolume(0.0);
         entity.setBestProducts(new HashSet<>());
 
-        return coffeeRepository.save(entity);
+        entity = save(entity);
+
+        addCountNumberProductToCaffe(entity.getId());
+        return entity;
+    }
+
+    @Override
+    public void addCountNumberProductToCaffe(Long id) {
+        CoffeeHouse coffeeHouse = findById(id);
+        List<Product> products = productService.findAll();
+
     }
 
     @Override
@@ -89,6 +102,7 @@ public class CoffeeServiceImpl implements CoffeeService {
     public void countBestProduct(Long id, Map<Product, Integer> countProduct) {
         CoffeeHouse coffeeHouse = findById(id);
         Set<BestProduct> bestProducts = coffeeHouse.getBestProducts();
+        log.info(String.valueOf(bestProducts.size()));
         for (BestProduct best: bestProducts){
             if(countProduct.containsKey(best.getProduct())){
                 bestProducts.remove(best);

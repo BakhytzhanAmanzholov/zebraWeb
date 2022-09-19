@@ -124,11 +124,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addClientToOrder(Long id, Long clientId) {
+    public Account addClientToOrder(Long id, Long clientId) {
         Booking order = findById(id);
         Account account = accountService.findById(clientId);
         order.setAccount(account);
         order.setFinalPrice(order.getPrice() - order.getPrice() / 100 * order.getAccount().getDiscount());
+        return account;
     }
 
     @Override
@@ -150,6 +151,7 @@ public class OrderServiceImpl implements OrderService {
                                 products.get(booking.getProducts().get(i)) + 1);
                     }
                 }
+                expenses+=booking.getProducts().get(i).getCostPrice();
             }
 
 

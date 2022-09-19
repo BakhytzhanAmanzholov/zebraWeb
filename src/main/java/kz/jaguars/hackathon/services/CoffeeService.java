@@ -16,4 +16,6 @@ public interface CoffeeService extends CrudService<CoffeeHouse, Long>{
     void countSales(Long id, Integer profit, Integer expenses, int size);
 
     void countBestProduct(Long id, Map<Product, Integer> countProduct);
+
+    void addCountNumberProductToCaffe(Long id);
 }

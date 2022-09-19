@@ -1,5 +1,6 @@
 package kz.jaguars.hackathon.controllers;
 
+import kz.jaguars.hackathon.dto.mappers.AccountMapper;
 import kz.jaguars.hackathon.dto.mappers.OrderMapper;
 import kz.jaguars.hackathon.dto.response.OrderDto;
 import kz.jaguars.hackathon.models.Booking;
@@ -60,10 +61,7 @@ public class OrderController {
 
     @PostMapping("/{id}/client/{client-id}")
     public ResponseEntity<?> addClient(@PathVariable("id") Long id, @PathVariable("client-id") Long clientId){
-
-        orderService.addClientToOrder(id, clientId);
-
-        return new ResponseEntity<>("Client " + clientId + " successfully added to order " + id, HttpStatus.OK);
+        return new ResponseEntity<>(AccountMapper.toResponseDto( orderService.addClientToOrder(id, clientId)), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
