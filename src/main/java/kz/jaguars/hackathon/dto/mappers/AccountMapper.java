@@ -28,6 +28,7 @@ public class AccountMapper {
                 .email(account.getEmail())
                 .phoneNumber(account.getPhoneNumber())
                 .username(account.getUsername())
+                .discount(account.getDiscount())
                 .preferences(new HashSet<>())
                 .orders(new ArrayList<>())
                 .build();

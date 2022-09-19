@@ -13,6 +13,9 @@ public class ClientDto {
     private String username;
     private String email;
     private String phoneNumber;
+
+    private Integer discount;
+
     private Set<ProductDto> preferences;
     private List<OrderHistoryDto> orders;
 }

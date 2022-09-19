@@ -2,32 +2,24 @@ package kz.jaguars.hackathon.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Hashtable;
-
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Base64;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
-import javax.imageio.ImageIO;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
 
 @Controller
 @Slf4j
@@ -35,54 +27,58 @@ import javax.imageio.ImageIO;
 @RequestMapping("/api/qr")
 public class QRController {
 
-    @GetMapping(
-            value = "/get-image-dynamic-type"
-    )
-    public ResponseEntity<?> getImageDynamicType() {
-        MediaType contentType = MediaType.IMAGE_PNG;
-        String qrCodeText = "https://www.journaldev.com";
-        String filePath = "JD.png";
-        int size = 125;
-        String fileType = "png";
-        File qrFile = new File(filePath);
+    private static final String QR_CODE_IMAGE_PATH = "C:\\Users\\Bakhytzhan\\zebraWeb\\src\\main\\java\\kz\\jaguars\\hackathon\\JD.png";
+
+
+    @GetMapping
+    public String getImageDynamicType(Model model) {
+        String medium="https://rahul26021999.medium.com/";
+        String github="https://github.com/rahul26021999";
+
+        byte[] image = new byte[0];
         try {
-            createQRImage(qrFile, qrCodeText, size, fileType);
-        }
-        catch (IOException | WriterException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
-        InputStream in = getClass().getResourceAsStream("JD.png");
-        assert in != null;
-        return ResponseEntity.ok()
-                .contentType(contentType)
-                .body(new InputStreamResource(in));
+            // Generate and Return Qr Code in Byte Array
+            image = getQRCodeImage(medium,250,250);
+
+            // Generate and Save Qr Code Image in static/image folder
+            generateQRCodeImage(github,250,250,QR_CODE_IMAGE_PATH);
+
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+        }
+        // Convert Byte Array into Base64 Encode String
+        String qrcode = Base64.getEncoder().encodeToString(image);
+
+        model.addAttribute("medium",medium);
+        model.addAttribute("github",github);
+        model.addAttribute("qrcode",qrcode);
+
+        return "qrcode";
     }
 
-    private static void createQRImage(File qrFile, String qrCodeText, int size, String fileType)
+    public static void generateQRCodeImage(String text, int width, int height, String filePath)
             throws WriterException, IOException {
-        Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
-        hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix byteMatrix = qrCodeWriter.encode(qrCodeText, BarcodeFormat.QR_CODE, size, size, hintMap);
-        // Make the BufferedImage that are to hold the QRCode
-        int matrixWidth = byteMatrix.getWidth();
-        BufferedImage image = new BufferedImage(matrixWidth, matrixWidth, BufferedImage.TYPE_INT_RGB);
-        image.createGraphics();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
 
-        Graphics2D graphics = (Graphics2D) image.getGraphics();
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(0, 0, matrixWidth, matrixWidth);
-        // Paint and save the image using the ByteMatrix
-        graphics.setColor(Color.BLACK);
+        Path path = FileSystems.getDefault().getPath(filePath);
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
 
-        for (int i = 0; i < matrixWidth; i++) {
-            for (int j = 0; j < matrixWidth; j++) {
-                if (byteMatrix.get(i, j)) {
-                    graphics.fillRect(i, j, 1, 1);
-                }
-            }
-        }
-        ImageIO.write(image, fileType, qrFile);
     }
+
+
+    public static byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+
+        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+        MatrixToImageConfig con = new MatrixToImageConfig( 0xFF000002 , 0xFFFFC041 ) ;
+
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream,con);
+        byte[] pngData = pngOutputStream.toByteArray();
+        return pngData;
+    }
+
+
 }
