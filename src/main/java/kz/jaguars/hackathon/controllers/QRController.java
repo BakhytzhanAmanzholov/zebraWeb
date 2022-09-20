@@ -2,6 +2,7 @@ package kz.jaguars.hackathon.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +27,10 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 @RequiredArgsConstructor
 @RequestMapping("/api/qr")
 public class QRController {
+    private static final String QR_CODE_IMAGE_PATH = "C:\\Users\\Bakhytzhan\\zebraWeb\\src\\main\\resources\\qrs\\JD.png";
 
-    private static final String QR_CODE_IMAGE_PATH = "C:\\Users\\Bakhytzhan\\zebraWeb\\src\\main\\java\\kz\\jaguars\\hackathon\\JD.png";
 
-
-    @GetMapping
+    @GetMapping()
     public String getImageDynamicType(Model model) {
         String medium="https://rahul26021999.medium.com/";
         String github="https://github.com/rahul26021999";
@@ -49,10 +49,13 @@ public class QRController {
         }
         // Convert Byte Array into Base64 Encode String
         String qrcode = Base64.getEncoder().encodeToString(image);
+        log.info(qrcode);
 
         model.addAttribute("medium",medium);
         model.addAttribute("github",github);
         model.addAttribute("qrcode",qrcode);
+        log.info(QR_CODE_IMAGE_PATH);
+        model.addAttribute("src", QR_CODE_IMAGE_PATH);
 
         return "qrcode";
     }
