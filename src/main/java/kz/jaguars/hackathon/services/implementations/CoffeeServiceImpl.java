@@ -38,7 +38,7 @@ public class CoffeeServiceImpl implements CoffeeService {
         entity.setSalesVolume(0.0);
         entity.setBestProducts(new HashSet<>());
 
-        entity = save(entity);
+        entity = coffeeRepository.save(entity);
 
         addCountNumberProductToCaffe(entity.getId());
         return entity;
