@@ -17,6 +17,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -33,7 +38,8 @@ public class JwtSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
                                                    JwtAuthenticationFilter jwtAuthenticationFilter,
                                                    JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
-        httpSecurity.csrf().disable();
+        httpSecurity.cors().and().csrf().disable();
+//        httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeRequests().antMatchers("/auth/token/**", "/", "/zebra-open-api").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/api/products/**").authenticated();
@@ -45,6 +51,15 @@ public class JwtSecurityConfig {
         httpSecurity.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
 
+    }
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://hackathon-2022-app.herokuapp.com/"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 
