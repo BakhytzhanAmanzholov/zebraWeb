@@ -39,7 +39,8 @@ public class JwtSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
                                                    JwtAuthenticationFilter jwtAuthenticationFilter,
                                                    JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
-        httpSecurity.cors(cors -> cors.disable());
+        httpSecurity.cors().configurationSource(corsConfigurationSource());
+//        httpSecurity.cors(cors -> cors.disable());
 //        .and().csrf().disable();
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
