@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,8 +39,9 @@ public class JwtSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
                                                    JwtAuthenticationFilter jwtAuthenticationFilter,
                                                    JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
-        httpSecurity.cors().and().csrf().disable();
-//        httpSecurity.csrf().disable();
+        httpSecurity.cors(AbstractHttpConfigurer::disable);
+//        .and().csrf().disable();
+        httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeRequests().antMatchers("/auth/token/**", "/", "/zebra-open-api").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/api/products/**").authenticated();
