@@ -57,7 +57,7 @@ public class JwtSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://hackathon-2022-app.herokuapp.com/"));
+        configuration.setAllowedOrigins(Arrays.asList("https://hackathon-2022-app.herokuapp.com/", "https://twitter-front-pi.vercel.app/"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
