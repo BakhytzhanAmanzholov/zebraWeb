@@ -38,7 +38,8 @@ public class JwtSecurityConfig {
     PasswordEncoder passwordEncoder;
 
     AuthenticationProvider refreshTokenAuthenticationProvider;
-//Access to XMLHttpRequest at 'https://hackathon-2022-app.herokuapp.com/api/supervisor/registration/' from origin 'https://twitter-front-pi.vercel.app' has been blocked by CORS policy: Response to preflight request doesn't pass access control check:
+
+    //Access to XMLHttpRequest at 'https://hackathon-2022-app.herokuapp.com/api/supervisor/registration/' from origin 'https://twitter-front-pi.vercel.app' has been blocked by CORS policy: Response to preflight request doesn't pass access control check:
 // No 'Access-Control-Allow-Origin' header is present on the requested resource.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
@@ -89,18 +90,17 @@ public class JwtSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
-        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("https://twitter-front-pi.vercel.app"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+        configuration.setAllowedOriginPatterns(Collections.singletonList("https://twitter-front-pi.vercel.app"));
         configuration.setAllowCredentials(true);
-//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
+        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "responseType", "Authorization"));
 //        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/api/**", configuration);
         return source;
     }
-
 
 
     @Autowired
