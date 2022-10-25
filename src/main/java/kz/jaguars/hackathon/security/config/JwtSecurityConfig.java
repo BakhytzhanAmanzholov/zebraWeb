@@ -25,6 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.Filter;
 import java.util.Arrays;
+import java.util.Collections;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -89,6 +90,7 @@ public class JwtSecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
 //        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
 //        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
