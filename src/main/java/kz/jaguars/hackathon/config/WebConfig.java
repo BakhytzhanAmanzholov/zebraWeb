@@ -5,6 +5,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -13,12 +14,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("https://twitter-front-pi.vercel.app/signUp", "https://hackathon-2022-app.herokuapp.com",
-                        "https://twitter-front-pi.vercel.app/", "https://twitter-front-pi.vercel.app")
+                .allowedOrigins("https://twitter-front-pi.vercel.app", "https://hackathon-2022-app.herokuapp.com/")
                 .allowedMethods("PUT", "DELETE", "POST", "GET")
-                .allowedOriginPatterns("https://twitter-front-pi.vercel.app")
+                .allowedHeaders("Content-Type", "Accept", "responseType", "Authorization")
+                .allowedOriginPatterns("*")
 //                .allowedHeaders("Authorization", "Requestor-Type", "header3")
 //                .exposedHeaders("header1", "header2")
-                .allowCredentials(true).maxAge(3600);
+                .maxAge(3600);
     }
 }

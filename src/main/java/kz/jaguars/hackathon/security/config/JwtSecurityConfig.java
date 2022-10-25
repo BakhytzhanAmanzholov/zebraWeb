@@ -50,7 +50,7 @@ public class JwtSecurityConfig {
 //                .authorizeExchange()
 //                .anyExchange().authenticated().and()
 //                .httpBasic();
-        httpSecurity.cors().configurationSource(corsConfigurationSource());
+        httpSecurity.cors().disable();
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeRequests().antMatchers("/auth/token/**", "/", "/zebra-open-api",
@@ -58,34 +58,12 @@ public class JwtSecurityConfig {
         httpSecurity.authorizeRequests().antMatchers("/api/products/**").authenticated();
         httpSecurity.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN");
 //        httpSecurity.authorizeRequests().antMatchers("/supervisor/**", "products/**").hasAuthority("SUPERVISOR");
-        httpSecurity.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+//        httpSecurity.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
         httpSecurity.addFilter(jwtAuthenticationFilter);
         httpSecurity.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
-
     }
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-////        configuration.setAllowedOrigins(Arrays.asList("*"));
-////        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-////        source.registerCorsConfiguration("/**", configuration);
-//        configuration.addAllowedOrigin("*");
-//        configuration.addAllowedHeader("*");
-//        configuration.addAllowedMethod("GET");
-//        configuration.addAllowedMethod("PUT");
-//        configuration.addAllowedMethod("POST");
-//        configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept",
-//                "Authorization", "Access-Control-Allow-Credentials", "Access-Control-Allow-Headers", "Access-Control-Allow-Methods",
-//                "Access-Control-Allow-Origin", "Access-Control-Expose-Headers", "Access-Control-Max-Age",
-//                "Access-Control-Request-Headers", "Access-Control-Request-Method", "Age", "Allow", "Alternates",
-//                "Content-Range", "Content-Disposition", "Content-Description"));
-//        configuration.setAllowCredentials(true);
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
