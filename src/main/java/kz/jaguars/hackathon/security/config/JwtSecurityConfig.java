@@ -65,21 +65,21 @@ public class JwtSecurityConfig {
         return httpSecurity.build();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://twitter-front-pi.vercel.app/signUp", "https://hackathon-2022-app.herokuapp.com", "https://twitter-front-pi.vercel.app/",
-                "https://twitter-front-pi.vercel.app"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
-        configuration.setAllowedOriginPatterns(Collections.singletonList("https://twitter-front-pi.vercel.app"));
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "responseType", "Authorization"));
-//        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
-        configuration.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("https://twitter-front-pi.vercel.app/signUp", "https://hackathon-2022-app.herokuapp.com", "https://twitter-front-pi.vercel.app/",
+//                "https://twitter-front-pi.vercel.app"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
+//        configuration.setAllowedOriginPatterns(Collections.singletonList("https://twitter-front-pi.vercel.app"));
+//        configuration.setAllowCredentials(true);
+//        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "responseType", "Authorization"));
+////        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
+//        configuration.setMaxAge(3600L);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/api/**", configuration);
+//        return source;
+//    }
 
 
     @Autowired
