@@ -90,7 +90,8 @@ public class JwtSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Arrays.asList("https://twitter-front-pi.vercel.app/signUp", "https://hackathon-2022-app.herokuapp.com", "https://twitter-front-pi.vercel.app/",
+                "https://twitter-front-pi.vercel.app"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowedOriginPatterns(Collections.singletonList("https://twitter-front-pi.vercel.app"));
         configuration.setAllowCredentials(true);
