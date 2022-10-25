@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/supervisor")
-@CrossOrigin
+@CrossOrigin(origins = "https://twitter-front-pi.vercel.app", methods = RequestMethod.POST, maxAge = 3600)
 public class SupervisorController {
     private final StaffService staffService;
 
     @PostMapping("/registration")
-    @CrossOrigin
     public ResponseEntity<?> registration(@RequestBody RegistrationDto dto) {
         try {
             staffService.findByEmail(dto.getEmail());
