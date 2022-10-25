@@ -39,9 +39,10 @@ public class JwtSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
                                                    JwtAuthenticationFilter jwtAuthenticationFilter,
                                                    JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
-        httpSecurity.cors().configurationSource(corsConfigurationSource());
-        httpSecurity.cors(cors -> cors.disable());
-        httpSecurity.csrf().disable();
+//        httpSecurity.cors().configurationSource(corsConfigurationSource());
+//        httpSecurity.cors(cors -> cors.disable());
+        httpSecurity.cors().and().csrf().disable();
+//        httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeRequests().antMatchers("/auth/token/**", "/", "/zebra-open-api").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/api/products/**").authenticated();
