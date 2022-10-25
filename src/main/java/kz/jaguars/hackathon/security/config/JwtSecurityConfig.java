@@ -50,7 +50,7 @@ public class JwtSecurityConfig {
 //                .authorizeExchange()
 //                .anyExchange().authenticated().and()
 //                .httpBasic();
-        httpSecurity.cors().disable();
+        httpSecurity.cors();
         httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeRequests().antMatchers("/auth/token/**", "/", "/zebra-open-api",

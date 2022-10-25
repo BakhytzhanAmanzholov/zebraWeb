@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/supervisor")
-@CrossOrigin(maxAge = 3600, allowCredentials = "true")
 public class SupervisorController {
     private final StaffService staffService;
 
     @PostMapping("/registration")
-    @CrossOrigin(origins = "https://twitter-front-pi.vercel.app", allowedHeaders = {"Requestor-Type", "Authorization"}, exposedHeaders = "X-Get-Header")
+//    @CrossOrigin(origins = "https://twitter-front-pi.vercel.app", allowedHeaders = {"Requestor-Type", "Authorization"}, exposedHeaders = "X-Get-Header")
     public ResponseEntity<?> registration(@RequestBody RegistrationDto dto) {
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.set("X-Get-Header", "ExampleHeader");
