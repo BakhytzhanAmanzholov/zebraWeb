@@ -6,6 +6,7 @@ import kz.jaguars.hackathon.models.Staff;
 import kz.jaguars.hackathon.services.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,12 +16,15 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/supervisor")
-@CrossOrigin(origins = "https://twitter-front-pi.vercel.app", methods = RequestMethod.POST, maxAge = 3600)
+@CrossOrigin(origins = "https://twitter-front-pi.vercel.app", methods = RequestMethod.POST, maxAge = 3600, allowCredentials = "true")
 public class SupervisorController {
     private final StaffService staffService;
 
     @PostMapping("/registration")
+    @CrossOrigin(origins = "https://twitter-front-pi.vercel.app", allowedHeaders = {"Requestor-Type", "Authorization"}, exposedHeaders = "X-Get-Header")
     public ResponseEntity<?> registration(@RequestBody RegistrationDto dto) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Get-Header", "ExampleHeader");
         try {
             staffService.findByEmail(dto.getEmail());
         } catch (UsernameNotFoundException e) {
