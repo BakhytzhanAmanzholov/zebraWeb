@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -56,7 +57,7 @@ public class JwtSecurityConfig {
         httpSecurity.authorizeRequests().antMatchers("/api/products/**").authenticated();
         httpSecurity.authorizeRequests().antMatchers("/admin/**").hasAuthority("ADMIN");
 //        httpSecurity.authorizeRequests().antMatchers("/supervisor/**", "products/**").hasAuthority("SUPERVISOR");
-
+        httpSecurity.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
         httpSecurity.addFilter(jwtAuthenticationFilter);
         httpSecurity.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -88,9 +89,9 @@ public class JwtSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://twitter-front-pi.vercel.app"));
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
-        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        configuration.setAllowedOriginPatterns(Collections.singletonList("https://twitter-front-pi.vercel.app"));
         configuration.setAllowCredentials(true);
 //        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
 //        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));

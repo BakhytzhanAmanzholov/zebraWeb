@@ -13,9 +13,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("https://twitter-front-pi.vercel.app")
+//                .allowedOrigins("*")
                 .allowedMethods("PUT", "DELETE", "POST", "GET")
-                .allowedOriginPatterns("*")
+                .allowedOriginPatterns("https://twitter-front-pi.vercel.app")
 //                .allowedHeaders("Authorization", "Requestor-Type", "header3")
 //                .exposedHeaders("header1", "header2")
                 .allowCredentials(true).maxAge(3600);
