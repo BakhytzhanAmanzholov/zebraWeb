@@ -23,8 +23,8 @@ public class SupervisorController {
     @PostMapping("/registration")
     @CrossOrigin(origins = "https://twitter-front-pi.vercel.app", allowedHeaders = {"Requestor-Type", "Authorization"}, exposedHeaders = "X-Get-Header")
     public ResponseEntity<?> registration(@RequestBody RegistrationDto dto) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Get-Header", "ExampleHeader");
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set("X-Get-Header", "ExampleHeader");
         try {
             staffService.findByEmail(dto.getEmail());
         } catch (UsernameNotFoundException e) {

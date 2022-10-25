@@ -16,7 +16,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addMapping("/api/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")
-                .allowedHeaders("*")
+//                .allowedHeaders("*")
                 .allowedOriginPatterns("*")
 //                .allowedHeaders("Authorization", "Requestor-Type", "header3")
 //                .exposedHeaders("header1", "header2")
