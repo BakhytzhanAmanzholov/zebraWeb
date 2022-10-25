@@ -34,15 +34,14 @@ public class JwtSecurityConfig {
     PasswordEncoder passwordEncoder;
 
     AuthenticationProvider refreshTokenAuthenticationProvider;
-
+//Access to XMLHttpRequest at 'https://hackathon-2022-app.herokuapp.com/api/supervisor/registration/' from origin 'https://twitter-front-pi.vercel.app' has been blocked by CORS policy: Response to preflight request doesn't pass access control check:
+// No 'Access-Control-Allow-Origin' header is present on the requested resource.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
                                                    JwtAuthenticationFilter jwtAuthenticationFilter,
                                                    JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
-//        httpSecurity.cors().configurationSource(corsConfigurationSource());
-//        httpSecurity.cors(cors -> cors.disable());
-        httpSecurity.cors().and().csrf().disable();
-//        httpSecurity.csrf().disable();
+        httpSecurity.cors().configurationSource(corsConfigurationSource());
+        httpSecurity.csrf().disable();
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.authorizeRequests().antMatchers("/auth/token/**", "/", "/zebra-open-api").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/api/products/**").authenticated();
@@ -56,10 +55,10 @@ public class JwtSecurityConfig {
 
     }
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://hackathon-2022-app.herokuapp.com/", "https://twitter-front-pi.vercel.app/"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.setAllowedOrigins(Arrays.asList("https://hackathon-2022-app.herokuapp.com/", "https://twitter-front-pi.vercel.app"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
