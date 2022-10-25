@@ -14,7 +14,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("https://twitter-front-pi.vercel.app", "https://hackathon-2022-app.herokuapp.com/")
+//                .allowedOrigins("https://twitter-front-pi.vercel.app", "https://hackathon-2022-app.herokuapp.com/")
                 .allowedMethods("PUT", "DELETE", "POST", "GET")
                 .allowedHeaders("Content-Type", "Accept", "responseType", "Authorization")
                 .allowedOriginPatterns("*")
