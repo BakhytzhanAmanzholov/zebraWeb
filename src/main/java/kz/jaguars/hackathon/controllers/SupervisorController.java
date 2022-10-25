@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/supervisor")
-@CrossOrigin(origins = "https://twitter-front-pi.vercel.app", methods = RequestMethod.POST, maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(maxAge = 3600, allowCredentials = "true")
 public class SupervisorController {
     private final StaffService staffService;
 

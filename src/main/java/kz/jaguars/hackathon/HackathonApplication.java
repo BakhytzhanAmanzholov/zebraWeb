@@ -38,7 +38,8 @@ public class HackathonApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://twitter-front-pi.vercel.app");
+                registry.addMapping("/**").allowedOrigins("*");
+
             }
         };
     }

@@ -87,11 +87,11 @@ public class JwtSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://twitter-front-pi.vercel.app"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH", "PUT", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
-        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
+//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Requestor-Type"));
+//        configuration.setExposedHeaders(Arrays.asList("X-Get-Header"));
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
