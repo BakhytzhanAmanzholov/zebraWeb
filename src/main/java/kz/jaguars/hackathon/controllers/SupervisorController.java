@@ -20,6 +20,7 @@ public class SupervisorController {
     private final StaffService staffService;
 
     @PostMapping("/registration")
+    @CrossOrigin
     public ResponseEntity<?> registration(@RequestBody RegistrationDto dto) {
         try {
             staffService.findByEmail(dto.getEmail());
